@@ -45,22 +45,58 @@ class _DetailScreenState extends State<DetailScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CardWidget(
-                thumb: widget.thumb,
-                id: widget.id,
-                size: 250,
-              ),
-            ],
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CardWidget(
+                  thumb: widget.thumb,
+                  id: widget.id,
+                  size: 250,
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            FutureBuilder(
+              future: webtoon,
+              builder: (context, snapshot) {
+                return !snapshot.hasData
+                    ? const Text('...')
+                    : Padding(
+                        padding: const EdgeInsets.fromLTRB(40, 20, 40, 100),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${snapshot.data!.genre} / ${snapshot.data!.age}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              snapshot.data!.about,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
