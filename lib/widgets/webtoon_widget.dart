@@ -30,7 +30,10 @@ class WebtoonWidget extends StatelessWidget {
       },
       child: Column(
         children: [
-          CardWidget(thumb: thumb),
+          CardWidget(
+            thumb: thumb,
+            id: id,
+          ),
           const SizedBox(
             height: 10,
           ),

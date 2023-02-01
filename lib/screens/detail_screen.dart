@@ -19,12 +19,11 @@ class DetailScreen extends StatelessWidget {
         elevation: 2,
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
-        title: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 24,
-            ),
+        centerTitle: true,
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 24,
           ),
         ),
       ),
@@ -36,7 +35,11 @@ class DetailScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CardWidget(thumb: thumb),
+              CardWidget(
+                thumb: thumb,
+                id: id,
+                size: 250,
+              ),
             ],
           ),
         ],
