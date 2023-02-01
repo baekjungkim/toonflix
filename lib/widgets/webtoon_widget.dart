@@ -33,14 +33,17 @@ class WebtoonWidget extends StatelessWidget {
           CardWidget(
             thumb: thumb,
             id: id,
+            size: 180,
           ),
           const SizedBox(
             height: 10,
           ),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 22,
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
           ),
         ],

@@ -4,6 +4,7 @@ import 'package:toonflix/models/webtoon_episode_model.dart';
 import 'package:toonflix/services/api_service.dart';
 import 'package:toonflix/widgets/card_widget.dart';
 import 'package:toonflix/widgets/episode_widget.dart';
+import 'package:toonflix/widgets/heart_icon_widget.dart';
 import 'package:toonflix/widgets/info_widget.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -40,6 +41,9 @@ class _DetailScreenState extends State<DetailScreen> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.green,
         centerTitle: true,
+        actions: [
+          HeartIconWidget(id: widget.id),
+        ],
         title: Text(
           widget.title,
           style: const TextStyle(

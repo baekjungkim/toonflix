@@ -44,16 +44,18 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  ListView makeList(AsyncSnapshot<List<WebtoonModel>> snapshot) {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: snapshot.data!.length,
+  GridView makeList(AsyncSnapshot<List<WebtoonModel>> snapshot) {
+    return GridView.builder(
       padding: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 20,
+        horizontal: 5,
       ),
-      separatorBuilder: (context, index) => const SizedBox(
-        width: 30,
+      itemCount: snapshot.data!.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1 / 2,
+        mainAxisExtent: 300,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
       ),
       itemBuilder: (context, index) {
         var webtoon = snapshot.data![index];
