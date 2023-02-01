@@ -3,6 +3,8 @@ import 'package:toonflix/models/webtoon_detail_dodel.dart';
 import 'package:toonflix/models/webtoon_episode_model.dart';
 import 'package:toonflix/services/api_service.dart';
 import 'package:toonflix/widgets/card_widget.dart';
+import 'package:toonflix/widgets/episode_widget.dart';
+import 'package:toonflix/widgets/info_widget.dart';
 
 class DetailScreen extends StatefulWidget {
   final String title, thumb, id;
@@ -72,7 +74,11 @@ class _DetailScreenState extends State<DetailScreen> {
                 builder: (context, snapshot) {
                   return !snapshot.hasData
                       ? const Text('...')
-                      : makeInfo(snapshot);
+                      : InfoWidget(
+                          genre: snapshot.data!.genre,
+                          age: snapshot.data!.age,
+                          about: snapshot.data!.about,
+                        );
                 },
               ),
               const SizedBox(
@@ -84,85 +90,28 @@ class _DetailScreenState extends State<DetailScreen> {
                   return !snapshot.hasData
                       ? Container()
                       : Flexible(
-                          child: makeEpisodeList(snapshot),
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              var episode = snapshot.data![index];
+                              return EpisodeWidget(
+                                episode: episode,
+                                webtoonId: widget.id,
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 10,
+                            ),
+                          ),
                         );
                 },
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Column makeInfo(AsyncSnapshot<WebtoonDetailModel> snapshot) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '${snapshot.data!.genre} / ${snapshot.data!.age}',
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Text(
-          snapshot.data!.about,
-          style: const TextStyle(
-            fontSize: 16,
-          ),
-        ),
-      ],
-    );
-  }
-
-  ListView makeEpisodeList(AsyncSnapshot<List<WebtoonEpisodeModel>> snapshot) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: snapshot.data!.length,
-      itemBuilder: (context, index) {
-        var episode = snapshot.data![index];
-        return Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.green.shade300,
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(
-                color: Colors.green.shade300,
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 20,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    episode.title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const Icon(
-                    Icons.chevron_right_rounded,
-                    color: Colors.white,
-                    weight: 600,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 10,
       ),
     );
   }
